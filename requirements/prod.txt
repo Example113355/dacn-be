@@ -1,0 +1,5 @@
+-r  base.txt
+sentry-sdk==2.14.0
+raven==6.10.0
+django-storages[s3]
+gunicorn
