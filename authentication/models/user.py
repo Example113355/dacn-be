@@ -34,6 +34,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(unique=True, null=False, blank=False, max_length=255)
     full_name = models.CharField(max_length=100, null=False, blank=False)
+    user_tier = models.CharField(max_length=100, default="normal")
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["full_name"]

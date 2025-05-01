@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY", "m6m55ud*s$t=%&xvexkffn64@j@b4!5k3ff@_f_3wx0ia_c&%s")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -55,6 +55,10 @@ INSTALLED_APPS = [
     "django_filters",
     "authentication",
     "corsheaders",
+    "address",
+    "note",
+    "item",
+    "garden",
 ]
 
 SIMPLE_JWT = {
