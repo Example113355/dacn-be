@@ -1,5 +1,5 @@
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
+# import sentry_sdk
+# from sentry_sdk.integrations.django import DjangoIntegration
 
 from .base import *
 
@@ -26,18 +26,18 @@ DATABASES = {
 }
 
 # Sentry
-sentry_sdk.init(
-    dsn=os.getenv("SENTRY_DNS"),
-    enable_tracing=True,
-    integrations=[
-        DjangoIntegration(
-            transaction_style="url",
-            middleware_spans=True,
-            signals_spans=False,
-            cache_spans=False,
-        ),
-    ],
-)
+# sentry_sdk.init(
+#     dsn=os.getenv("SENTRY_DNS"),
+#     enable_tracing=True,
+#     integrations=[
+#         DjangoIntegration(
+#             transaction_style="url",
+#             middleware_spans=True,
+#             signals_spans=False,
+#             cache_spans=False,
+#         ),
+#     ],
+# )
 
 # boto3
 STORAGES = {
@@ -73,15 +73,16 @@ LOGGING = {
             "class": "logging.StreamHandler",
             "formatter": "standard",
         },
-        "sentry": {
-            "level": "ERROR",
-            "filters": ["require_debug_false"],
-            "class": "raven.contrib.django.handlers.SentryHandler",
-        },
+        # "sentry": {
+        #     "level": "ERROR",
+        #     "filters": ["require_debug_false"],
+        #     "class": "raven.contrib.django.handlers.SentryHandler",
+        # },
     },
     "loggers": {
         "django": {
-            "handlers": ["console", "sentry"],
+            # "handlers": ["console", "sentry"],
+            "handlers": ["console"],
             "propagate": True,
             "level": "INFO",
         },

@@ -39,6 +39,7 @@ urlpatterns = [
     path("api/v1/note/", include("note.urls")),
     path("api/v1/item/", include("item.urls")),
     path("api/v1/garden/", include("garden.urls")),
+    path("api/v1/history/", include("history.urls")),
     path("admin/", admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

@@ -8,8 +8,5 @@ from authentication.models.user import User
 class History(BaseModel):
     description = models.CharField(max_length=100)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-
-class CaringHistory(models.Model):
-    garden_item = models.ForeignKey(Garden, on_delete=models.CASCADE)
-    history = models.ForeignKey(History, on_delete=models.CASCADE)
+    is_caring_history = models.BooleanField(default=False)
+    garden_item = models.ForeignKey(Garden, on_delete=models.CASCADE, null=True, blank=True)
