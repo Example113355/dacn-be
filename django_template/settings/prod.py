@@ -9,7 +9,7 @@ DEBUG = os.getenv("DEBUG", False)
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-INSTALLED_APPS += ["storages"]
+# INSTALLED_APPS += ["storages"]
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -39,22 +39,22 @@ DATABASES = {
 #     ],
 # )
 
-# boto3
-STORAGES = {
-    "default": {
-        "BACKEND": "storages.backends.s3.S3Storage",
-    },
-    "staticfiles": {
-        "BACKEND": "storages.backends.s3.S3Storage",
-    },
-}
-AWS_S3_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-AWS_S3_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
-AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "us-east-2")
-AWS_S3_SIGNATURE_VERSION = os.getenv("AWS_S3_SIGNATURE_VERSION", "s3v4")
-AWS_S3_FILE_OVERWRITE = str(os.getenv("AWS_S3_FILE_OVERWRITE", False)).lower() == "true"
-AWS_QUERYSTRING_AUTH = str(os.getenv("AWS_QUERYSTRING_AUTH", False)).lower() == "true"
+# # boto3
+# STORAGES = {
+#     "default": {
+#         "BACKEND": "storages.backends.s3.S3Storage",
+#     },
+#     "staticfiles": {
+#         "BACKEND": "storages.backends.s3.S3Storage",
+#     },
+# }
+# AWS_S3_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+# AWS_S3_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+# AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+# AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "us-east-2")
+# AWS_S3_SIGNATURE_VERSION = os.getenv("AWS_S3_SIGNATURE_VERSION", "s3v4")
+# AWS_S3_FILE_OVERWRITE = str(os.getenv("AWS_S3_FILE_OVERWRITE", False)).lower() == "true"
+# AWS_QUERYSTRING_AUTH = str(os.getenv("AWS_QUERYSTRING_AUTH", False)).lower() == "true"
 
 # Logging
 LOGGING = {
