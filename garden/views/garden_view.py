@@ -94,6 +94,8 @@ class GardenView(viewsets.ModelViewSet):
                 caring_type=History.CareType.HARVESTING,
             )
 
+            garden.delete()
+
         return Response(
             {"message": f"Successfully {caring_type.lower()} the garden with item {garden.item.name}"},
             status=status.HTTP_200_OK
