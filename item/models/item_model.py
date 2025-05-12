@@ -9,7 +9,7 @@ class Item(BaseModel):
     growth_period = models.CharField(max_length=100, null=True, blank=True)
     sun_condition = models.IntegerField(null=True, blank=True)
     water_condition = models.IntegerField(null=True, blank=True)
-    price = models.IntegerField()
+    price = models.IntegerField(default=0)
     
     def __str__(self):
         return self.name
