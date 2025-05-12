@@ -41,6 +41,7 @@ urlpatterns = [
     path("api/v1/garden/", include("garden.urls")),
     path("api/v1/history/", include("history.urls")),
     path("api/v1/payment/", include("payment.urls")),
+    path("api/v1/order/", include("order.urls")),
     path("admin/", admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

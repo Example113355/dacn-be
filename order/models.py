@@ -10,7 +10,7 @@ class Order(BaseModel):
     items = models.ManyToManyField(Item, through='OrderItem')
 
     def __str__(self):
-        return f"{self.user.username} - {self.total_price} - {self.created_at}"
+        return f"{self.total_price} - {self.created_at}"
 
 class OrderItem(BaseModel):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -19,4 +19,4 @@ class OrderItem(BaseModel):
     price = models.IntegerField()
 
     def __str__(self):
-        return f"{self.order.user.username} - {self.item.name} - {self.quantity} - {self.price}"
+        return f"{self.item.name} - {self.quantity} - {self.price}"
