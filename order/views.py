@@ -12,10 +12,10 @@ from order.serializers.order_item_serializers import OrderItemSerializer
 class OrderView(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
-    def get_serializer(self):
+    def get_serializer(self, *args, **kwargs):
         if self.action == 'create':
-            return OrderSerializer
-        return OrderSerializer
+            return OrderSerializer(*args, **kwargs)
+        return OrderSerializer(*args, **kwargs)
 
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user).prefetch_related(
