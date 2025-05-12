@@ -2,6 +2,7 @@ from rest_framework import serializers
 from garden.models.garden_model import Garden
 from item.serializers.item_serializer import ItemSerializer
 from authentication.serializers.user_serializer import UserSerializer
+from history.history_models import History
 
 
 class GardenSerializer(serializers.ModelSerializer):
@@ -19,3 +20,12 @@ class CreateGardenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Garden
         fields = "status", "item_id", "user_id"
+
+
+class CaringGardenSerializer(serializers.ModelSerializer):
+    garden_item_id = serializers.IntegerField()
+    caring_type = serializers.ChoiceField(choices=History.CareType.choices)
+
+    class Meta:
+        model = Garden
+        fields = "garden_item_id", "caring_type"
