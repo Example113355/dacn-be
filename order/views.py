@@ -5,14 +5,14 @@ from django.db.models import Prefetch
 
 
 from order.models import Order, OrderItem
-from order.serializers.order_serializers import OrderSerializer
+from order.serializers.order_serializers import OrderSerializer, CreateOrderSerializer
 from order.serializers.order_item_serializers import OrderItemSerializer
 
 
 class OrderView(viewsets.ModelViewSet):
     def get_serializer(self, *args, **kwargs):
         if self.action == 'create':
-            return OrderSerializer(*args, **kwargs)
+            return CreateOrderSerializer(*args, **kwargs)
         return OrderSerializer(*args, **kwargs)
     
     def get_permissions(self):
@@ -34,3 +34,4 @@ class OrderView(viewsets.ModelViewSet):
 
     def create(self, request):
         print(request.data)
+        return Response("ok", status=status.HTTP_200_OK)
