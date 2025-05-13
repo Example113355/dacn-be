@@ -6,6 +6,9 @@ from rest_framework.permissions import IsAuthenticated
 from payos import PayOS, ItemData, PaymentData
 from django.conf import settings
 from payment.payment_serializers import PaymentSerializer
+from order.models import Order, OrderItem
+from item.models.item_model import Item
+from inventory.models import Inventory
 
 from django_core.utils import generate_unique_code
 
@@ -24,6 +27,36 @@ class PayosService(viewsets.ViewSet):
             checksum_key=PAYOS_CHECKSUM_KEY,
         )
 
+    def payment_webhook(self, request):
+        # Verify the webhook data using PayOS SDK
+        webhook_data = self.payOS.verifyPaymentWebhookData(request.data)
+        if not webhook_data:
+            return Response({"error": "Invalid webhook data"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        order_code = webhook_data.get("orderCode")
+        order = Order.objects.get(order_code=order_code)
+
+        if not order:
+            return Response({"error": "Order not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+        order.status = Order.OrderStatus.COMPLETED
+        order.save()
+
+        order_items = OrderItem.objects.filter(order=order)
+        for order_item in order_items:
+            inventory, created = Inventory.objects.get_or_create(
+                item=order_item.item,
+                defaults={"quantity": order_item.quantity},
+            )
+            if not created:
+                inventory.quantity += order_item.quantity
+            inventory.save()
+
+        return Response(
+            {"success": True},
+            status=status.HTTP_200_OK,
+        )
+
     def get_serializer(self):
         return PaymentSerializer()
 
@@ -37,11 +70,30 @@ class PayosService(viewsets.ViewSet):
             }, status=status.HTTP_400_BAD_REQUEST)
         
         items = []
+        item_map = {}
+        order_code = generate_unique_code()
+
+        order = Order.objects.create(
+            user=request.user,
+            total_price=payload["amount"],
+            order_code=order_code,
+        )
+
         for item in payload["items"]:
             items.append(ItemData(name=item["item_name"], quantity=item["item_quantity"], price=item["item_price"]))
+            item_map[item["item_id"]] = item["item_quantity"]
+        
+        items_selected = Item.objects.select_for_update().filter(id__in=item_map.keys())
+        for item in items_selected:
+            OrderItem.objects.create(
+                order=order,
+                item=item,
+                quantity=item_map[item.id],
+                price=item.price,
+            )
 
         payment_data = PaymentData(
-            orderCode=generate_unique_code(),
+            orderCode=order_code,
             amount=payload["amount"],
             description=payload["description"],
             items=items,

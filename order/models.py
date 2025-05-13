@@ -5,9 +5,18 @@ from item.models.item_model import Item
 
 
 class Order(BaseModel):
+    class OrderStatus(models.TextChoices):
+        PENDING = 'pending', 'Pending'
+        COMPLETED = 'completed', 'Completed'
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     total_price = models.IntegerField()
     items = models.ManyToManyField(Item, through='OrderItem')
+    status = models.CharField(
+        max_length=20,
+        choices=OrderStatus.choices,
+        default=OrderStatus.PENDING,
+    )
+    order_code = models.IntegerField(unique=True, null=True, blank=True)
 
     def __str__(self):
         return f"{self.total_price} - {self.created_at}"

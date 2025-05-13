@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "garden",
     "history",
     "order",
+    "inventory",
 ]
 
 SIMPLE_JWT = {

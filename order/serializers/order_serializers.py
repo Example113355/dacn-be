@@ -11,7 +11,3 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ['id', 'total_price', 'items']
-
-
-class CreateOrderSerializer(serializers.Serializer):
-    test = serializers.IntegerField()
