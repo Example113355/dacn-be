@@ -39,7 +39,16 @@ class PayosService(viewsets.ViewSet):
             return Response({"error": "Invalid webhook data"}, status=status.HTTP_400_BAD_REQUEST)
         
         order_code = webhook_data.orderCode
-        order = Order.objects.get(order_code=order_code)
+
+        return Response(
+            {"success": True},
+            status=status.HTTP_200_OK,
+        )
+
+        try:
+            order = Order.objects.get(order_code=order_code)
+        except Order.DoesNotExist:
+            return Response({"error": "Order not found"}, status=status.HTTP_404_NOT_FOUND)
 
         if not order:
             return Response({"error": "Order not found"}, status=status.HTTP_404_NOT_FOUND)
