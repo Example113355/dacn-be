@@ -54,6 +54,7 @@ class PayosService(viewsets.ViewSet):
         order_items = OrderItem.objects.filter(order=order)
         for order_item in order_items:
             inventory, created = Inventory.objects.get_or_create(
+                user=order.user,
                 item=order_item.item,
                 defaults={"quantity": order_item.quantity},
             )
