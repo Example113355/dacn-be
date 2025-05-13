@@ -18,14 +18,19 @@ PAYOS_CHECKSUM_KEY = settings.PAYOS_CHECKSUM_KEY
 FRONT_END_URL = settings.FRONT_END_URL
 
 class PayosService(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated]
-    
     def __init__(self):
         self.payOS = PayOS(
             client_id=PAYOS_CLIENT_ID,
             api_key=PAYOS_API_KEY,
             checksum_key=PAYOS_CHECKSUM_KEY,
         )
+
+    def get_permissions(self):
+        if self.action == 'payment_webhook':
+            permission_classes = []
+        else:
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
 
     def payment_webhook(self, request):
         # Verify the webhook data using PayOS SDK
