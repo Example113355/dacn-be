@@ -38,7 +38,7 @@ class PayosService(viewsets.ViewSet):
         if not webhook_data:
             return Response({"error": "Invalid webhook data"}, status=status.HTTP_400_BAD_REQUEST)
         
-        order_code = webhook_data.get("orderCode")
+        order_code = webhook_data.orderCode
         order = Order.objects.get(order_code=order_code)
 
         if not order:
