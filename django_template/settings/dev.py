@@ -1,6 +1,6 @@
 from .base import *
 
-ALLOWED_HOSTS = ["digifarm.click"]
+ALLOWED_HOSTS = ["digifarm.click", "127.0.0.1"]
 
 DEBUG = os.getenv("DEBUG", True)
 

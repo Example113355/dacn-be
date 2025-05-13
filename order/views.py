@@ -34,4 +34,6 @@ class OrderView(viewsets.ModelViewSet):
 
     def create(self, request):
         print(request.data)
-        return Response("ok", status=status.HTTP_200_OK)
+        return Response({
+            "success": True,
+        }, status=status.HTTP_200_OK)
