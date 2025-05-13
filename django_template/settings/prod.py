@@ -3,7 +3,7 @@
 
 from .base import *
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1").split(",")
+ALLOWED_HOSTS = ["digifarm.click"]
 
 DEBUG = os.getenv("DEBUG", False)
 
