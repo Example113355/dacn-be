@@ -17,9 +17,9 @@ class OrderView(viewsets.ModelViewSet):
     
     def get_permissions(self):
         if self.action == 'create':
-            permission_classes = [IsAuthenticated]
-        else:
             permission_classes = []
+        else:
+            permission_classes = [IsAuthenticated]
         return [permission() for permission in permission_classes]
 
     def get_queryset(self):
