@@ -40,11 +40,6 @@ class PayosService(viewsets.ViewSet):
         
         order_code = webhook_data.orderCode
 
-        return Response(
-            {"success": True},
-            status=status.HTTP_200_OK,
-        )
-
         try:
             order = Order.objects.get(order_code=order_code)
         except Order.DoesNotExist:
