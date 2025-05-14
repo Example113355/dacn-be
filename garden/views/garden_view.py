@@ -38,7 +38,7 @@ class GardenView(viewsets.ModelViewSet):
         
         item = Item.objects.get(id=request.data["item_id"])
 
-        if not item.is_seed:
+        if item.category != Item.CategoryChoices.SEED:
             return Response({"message": "Item is not a seed"}, status=status.HTTP_400_BAD_REQUEST)
 
         if not Inventory.objects.filter(user=request.user, item=item).exists():
