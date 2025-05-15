@@ -26,6 +26,7 @@ class Item(BaseModel):
         blank=True,
         related_name='plant_items'
     )
+    image_url = models.CharField(max_length=200, null=True, blank=True)
     price = models.IntegerField(default=0)
     
     def __str__(self):
