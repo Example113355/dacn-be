@@ -31,8 +31,6 @@ class DeliveryView(viewsets.ModelViewSet):
         serializer.validated_data["payment_type_id"] = 2
         serializer.validated_data["service_type_id"] = 2
         serializer.validated_data["required_note"] = "KHONGCHOXEMHANG"
-        
-        print(serializer.validated_data)
 
         response = requests.post(
             "https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create",
@@ -42,6 +40,8 @@ class DeliveryView(viewsets.ModelViewSet):
                 "ShopId": settings.GHN_SHOP_ID,
             }
         )
+
+        print(response.status_code)
 
         if response.status_code != 200:
             return Response(
