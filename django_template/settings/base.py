@@ -62,6 +62,8 @@ INSTALLED_APPS = [
     "history",
     "order",
     "inventory",
+    "delivery",
+    'background_task',
 ]
 
 SIMPLE_JWT = {
@@ -156,6 +158,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 EMAIL_CONTACT = "contact@snippets.local"
 LICENSE = "python-django-api-template License"
 
+# GHN
+GHN_TOKEN = os.getenv("GHN_TOKEN")
+GHN_SHOP_ID = os.getenv("GHN_SHOPID")
+
 # Email
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
@@ -168,6 +174,12 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 STRIPE_ENDPOINT_SECRET = os.getenv("STRIPE_ENDPOINT_SECRET")
+
+# IOT
+IOT_USERNAME = os.getenv("IOT_USERNAME")
+IOT_PASSWORD = os.getenv("IOT_PASSWORD")
+AUTHEN_URL = os.getenv("AUTHEN_URL")
+PUMP_URL = os.getenv("PUMP_URL")
 
 # PayOS
 PAYOS_CLIENT_ID = os.getenv("PAYOS_CLIENT_ID")

@@ -1,7 +1,12 @@
+import requests
+
+from django.conf import settings
+
 from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.db import transaction
+from django_core.tasks import stop_pump
 
 from garden.models.garden_model import Garden, Status
 from garden.serializers.garden_serializer import GardenSerializer, CreateGardenSerializer, CaringGardenSerializer
@@ -85,6 +90,24 @@ class GardenView(viewsets.ModelViewSet):
             return Response({"message": "Garden does not exist"}, status=status.HTTP_400_BAD_REQUEST)
         
         if caring_type == History.CareType.WATERING:
+            # authentication = requests.post(
+            #     settings.AUTHEN_URL,
+            #     json={
+            #         "username": settings.IOT_USERNAME, 
+            #         "password": settings.IOT_PASSWORD
+            #     },
+            #     headers={"Content-Type": "application/json"}
+            # )
+
+            # res = requests.post(
+            #     settings.PUMP_URL,
+            #     headers={
+            #         "X-Authorization": f"Bearer {authentication.json()['token']}", 
+            #         "Content-Type": "application/json"
+            #     },
+            #     json={"method": "setBumpStatus", "params": 1},
+            # )
+
             History.objects.create(
                 user=user,
                 description=f"Watered the garden with item {garden.item.name}",
@@ -92,6 +115,8 @@ class GardenView(viewsets.ModelViewSet):
                 garden_item=garden,
                 caring_type=History.CareType.WATERING,
             )
+
+            # stop_pump(token=authentication.json()["token"])
         
         elif caring_type == History.CareType.FERTILIZING:
             History.objects.create(
