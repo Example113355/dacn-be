@@ -8,6 +8,8 @@ from rest_framework.response import Response
 from delivery.models import Delivery
 from delivery.serializers import GetDeliverySerializer, CreateDeliverySerializer
 
+from inventory.models import Inventory
+
 
 class DeliveryView(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
@@ -56,6 +58,22 @@ class DeliveryView(viewsets.ModelViewSet):
                 {"error": "Invalid response from GHN API"},
                 status=status.HTTP_400_BAD_REQUEST
             )
+        
+        user_inventory = Inventory.objects.filter(user=request.user)
+        for item in serializer.validated_data["items"]:
+            inventory_item = user_inventory.filter(item__id=item["item_id"]).first()
+            if inventory_item:
+                inventory_item.quantity -= item["quantity"]
+                if inventory_item.quantity <= 0:
+                    inventory_item.delete()
+                else:
+                    inventory_item.save()
+            else:
+                return Response(
+                    {"error": f"Item {item['item_id']} not found in inventory"},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+                
         
         Delivery.objects.create(
             user=request.user,

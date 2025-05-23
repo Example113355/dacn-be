@@ -3,6 +3,7 @@ from delivery.models import Delivery
 
 
 class DeliveryItemSerializer(serializers.Serializer):
+    item_id = serializers.IntergerField()
     name = serializers.CharField()
     quantity = serializers.IntegerField()
     price = serializers.IntegerField()
