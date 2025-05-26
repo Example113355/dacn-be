@@ -1,7 +1,7 @@
-# python-django-api-template
+# Digital Twins app's backend
 
 ## Overview
-The python-django-api-template serves as the boilerplate for constructing a Django project. :goat: :goat: :goat:
+The backend server for the Digital Twins app. :goat: :goat: :goat:
 ## Requirements
 - Python 3.12.6
 - Django 5.1.1
@@ -33,23 +33,13 @@ Run server.
 ```sh
 python manage.py runserver
 ```
-
-Run redis server.
+Create superuser account
 ```sh
-redis-server
+python manage.py createsuperuser
 ```
+enter the required information. You can use this account to visit admin page `127.0.0.1:8000/admin`
 
-Run celery and celery beat.
-```sh
-celery -A django_template worker --beat --scheduler django -l info -E
-```
-
-Run celery flower
-```sh
-celery -A django_template flower
-```
 ## Create users and Tokens
-
 First, we need to create a user so that we can log in.
 ```sh
 curl --location --request POST 'http://127.0.0.1:8000/api/v1/auth/register/' \
@@ -115,12 +105,6 @@ coverage run --source='.' manage.py test
 coverage html
 ```
 
-## Load fixture data
-
-```sh
-python manage.py loaddata authentication/fixtures/customer.json --app authentication.customer
-```
-
 ## Run docker
 
 ```sh
@@ -133,6 +117,3 @@ docker compose up
 python manage.py flushexpiredtokens
 ```
 
-## Database diagram
-
-![Database diagram](db_diagram.png)
